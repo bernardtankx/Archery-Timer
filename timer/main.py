@@ -1,5 +1,6 @@
 import sys
 import qthread
+import time
 import timer
 import threading
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -46,6 +47,7 @@ class AutoTimer(Ui_AutoTimer):
 
     def start(self):
         self.t_stop.set()
+        time.sleep(0.5)
         self.t_stop.clear()
         if self._fourMin and not self.t4.is_alive() and not self.t3.is_alive() and not self.t2.is_alive():
             self.t4 = timer.Timer(4, self.t_stop)

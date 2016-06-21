@@ -1,14 +1,15 @@
 import time
 import pygame
 import threading
-from PyQt5 import QtCore, QtGui, QtWidgets
-from gui import Ui_AutoTimer
 
 
 class Timer (threading.Thread):
     def __init__(self, minutes, stop):
         threading.Thread.__init__(self)
+        self.daemon = True
+
         pygame.mixer.init()
+
         self.minutes = minutes
         self.stop = stop
 

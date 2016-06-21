@@ -1,5 +1,6 @@
 import sys
 import timer
+import threading
 from PyQt5 import QtCore, QtGui, QtWidgets
 from gui import Ui_AutoTimer
 
@@ -13,12 +14,18 @@ class AutoTimer(Ui_AutoTimer):
         self._threeMin = False
         self._twoMin = False
 
+        self.t_stop = threading.Event()
+
+        self.t4 = timer.Timer(4, self.t_stop)
+        self.t3 = timer.Timer(3, self.t_stop)
+        self.t2 = timer.Timer(2, self.t_stop)
+
         # Connect button with a custom function
         self.fourMinuteBtn.clicked.connect(self.selectFourMin)
         self.threeMinuteBtn.clicked.connect(self.selectThreeMin)
         self.twoMinuteBtn.clicked.connect(self.selectTwoMin)
         self.startBtn.clicked.connect(self.start)
-        #self.stopBtn.clicked.connect(self.stop)
+        self.stopBtn.clicked.connect(self.stop)
 
     def selectFourMin(self):
         self._fourMin = True
@@ -36,12 +43,19 @@ class AutoTimer(Ui_AutoTimer):
         self._twoMin = True
 
     def start(self):
+        self.t_stop.clear()
         if self._fourMin:
-            timer.fourmin()
-        if self._threeMin:
-            timer.threemin()
-        if self._twoMin:
-            timer.twomin()
+            self.t4 = timer.Timer(4, self.t_stop)
+            self.t4.start()
+        elif self._threeMin:
+            self.t3 = timer.Timer(3, self.t_stop)
+            self.t3.start()
+        elif self._twoMin:
+            self.t2 = timer.Timer(2, self.t_stop)
+            self.t2.start()
+
+    def stop(self):
+        self.t_stop.set()
 
 
 if __name__ == '__main__':
@@ -51,4 +65,5 @@ if __name__ == '__main__':
     prog = AutoTimer(dialog)
 
     dialog.show()
+
     sys.exit(app.exec_())

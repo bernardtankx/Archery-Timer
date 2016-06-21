@@ -25,8 +25,8 @@ class Ui_AutoTimer(object):
         self.lcdNumber.setGeometry(QtCore.QRect(9, 9, 301, 191))
         self.lcdNumber.setDigitCount(3)
         self.lcdNumber.setSegmentStyle(QtWidgets.QLCDNumber.Filled)
-        self.lcdNumber.setProperty("value", 111.0)
-        self.lcdNumber.setProperty("intValue", 111)
+        self.lcdNumber.setProperty("value", 0.0)
+        self.lcdNumber.setProperty("intValue", 0)
         self.lcdNumber.setObjectName("lcdNumber")
         self.threeMinuteBtn = QtWidgets.QRadioButton(AutoTimer)
         self.threeMinuteBtn.setGeometry(QtCore.QRect(110, 270, 93, 17))
@@ -41,10 +41,10 @@ class Ui_AutoTimer(object):
     def retranslateUi(self, AutoTimer):
         _translate = QtCore.QCoreApplication.translate
         AutoTimer.setWindowTitle(_translate("AutoTimer", "Auto Timer"))
-        self.fourMinuteBtn.setText(_translate("AutoTimer", "4 Minute Timer"))
-        self.twoMinuteBtn.setText(_translate("AutoTimer", "2 Minute Timer"))
+        self.fourMinuteBtn.setText(_translate("AutoTimer", "4 Minute"))
+        self.twoMinuteBtn.setText(_translate("AutoTimer", "2 Minute"))
         self.stopBtn.setText(_translate("AutoTimer", "Stop"))
-        self.threeMinuteBtn.setText(_translate("AutoTimer", "3 Minute Timer"))
+        self.threeMinuteBtn.setText(_translate("AutoTimer", "3 Minute"))
         self.startBtn.setText(_translate("AutoTimer", "Start"))
 
 

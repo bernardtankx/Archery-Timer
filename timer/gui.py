@@ -12,6 +12,9 @@ class Ui_AutoTimer(object):
     def setupUi(self, AutoTimer):
         AutoTimer.setObjectName("AutoTimer")
         AutoTimer.resize(319, 296)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("timer/watch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        AutoTimer.setWindowIcon(icon)
         self.fourMinuteBtn = QtWidgets.QRadioButton(AutoTimer)
         self.fourMinuteBtn.setGeometry(QtCore.QRect(210, 270, 93, 17))
         self.fourMinuteBtn.setObjectName("fourMinuteBtn")
@@ -40,7 +43,7 @@ class Ui_AutoTimer(object):
 
     def retranslateUi(self, AutoTimer):
         _translate = QtCore.QCoreApplication.translate
-        AutoTimer.setWindowTitle(_translate("AutoTimer", "Auto Timer"))
+        AutoTimer.setWindowTitle(_translate("AutoTimer", "Timer"))
         self.fourMinuteBtn.setText(_translate("AutoTimer", "4 Minute"))
         self.twoMinuteBtn.setText(_translate("AutoTimer", "2 Minute"))
         self.stopBtn.setText(_translate("AutoTimer", "Stop"))

@@ -6,14 +6,18 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+import os
+import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_AutoTimer(object):
     def setupUi(self, AutoTimer):
         AutoTimer.setObjectName("AutoTimer")
         AutoTimer.resize(319, 296)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("timer/watch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon_loc = resource_path(os.path.join('data', 'watch.ico'))
+        icon.addPixmap(QtGui.QPixmap(icon_loc), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         AutoTimer.setWindowIcon(icon)
         self.fourMinuteBtn = QtWidgets.QRadioButton(AutoTimer)
         self.fourMinuteBtn.setGeometry(QtCore.QRect(210, 270, 93, 17))
@@ -51,8 +55,12 @@ class Ui_AutoTimer(object):
         self.startBtn.setText(_translate("AutoTimer", "Start"))
 
 
+def resource_path(relative):
+    if hasattr(sys, "_MEIPASS"):
+        return os.path.join(sys._MEIPASS, relative)
+    return os.path.join(relative)
+
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
     AutoTimer = QtWidgets.QDialog()
     ui = Ui_AutoTimer()

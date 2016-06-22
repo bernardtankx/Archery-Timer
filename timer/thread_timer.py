@@ -1,3 +1,5 @@
+import os
+import sys
 import time
 import pygame
 import threading
@@ -9,6 +11,9 @@ class Timer (threading.Thread):
         self.daemon = True
 
         pygame.mixer.init()
+        self.sfx_whistle = resource_path(os.path.join('data', 'whistle.wav'))
+        self.sfx_oneminute = resource_path(os.path.join('data', 'oneminute.wav'))
+        self.sfx_twominutes = resource_path(os.path.join('data', 'twominutes.wav'))
 
         self.minutes = minutes
         self.seconds = 0
@@ -20,15 +25,15 @@ class Timer (threading.Thread):
             while self.seconds >= 0.0 and not self.stop.is_set():
                 # ----------- STARTING PHASE ------------------
                 if self.seconds == 122.5 or self.seconds == 122.0 or self.seconds == 120.0:
-                    pygame.mixer.music.load("./timer/tracks/whistle.ogg")
+                    pygame.mixer.music.load(self.sfx_whistle)
                     pygame.mixer.music.play()  # BEEP 1/2/3
                 # ------------ COMMENCE SHOOTING ---------------
                 if self.seconds == 60.0:
-                    pygame.mixer.music.load("./timer/tracks/oneminuteremaining.ogg")
+                    pygame.mixer.music.load(self.sfx_oneminute)
                     pygame.mixer.music.play()  # 1 MINUTE REMAINING
 
                 if self.seconds == 0.0:
-                    pygame.mixer.music.load("./timer/tracks/whistle.ogg")
+                    pygame.mixer.music.load(self.sfx_whistle)
                     pygame.mixer.music.play()  # 0 MINUTE REMAINING
                 # --------------- END SHOOTING ---------------
                 time.sleep(0.5)
@@ -39,15 +44,15 @@ class Timer (threading.Thread):
             while self.seconds >= 0.0 and not self.stop.is_set():
                 # ----------- STARTING PHASE ------------------
                 if self.seconds == 182.5 or self.seconds == 182.0 or self.seconds == 180.0:
-                    pygame.mixer.music.load("./timer/tracks/whistle.ogg")
+                    pygame.mixer.music.load(self.sfx_whistle)
                     pygame.mixer.music.play()  # BEEP 1/2/3
                 # ------------ COMMENCE SHOOTING ---------------
                 if self.seconds == 60.0:
-                    pygame.mixer.music.load("./timer/tracks/oneminuteremaining.ogg")
+                    pygame.mixer.music.load(self.sfx_oneminute)
                     pygame.mixer.music.play()  # 1 MINUTE REMAINING
 
                 if self.seconds == 0.0:
-                    pygame.mixer.music.load("./timer/tracks/whistle.ogg")
+                    pygame.mixer.music.load(self.sfx_whistle)
                     pygame.mixer.music.play()  # 0 MINUTE REMAINING
                 # --------------- END SHOOTING ---------------
                 time.sleep(0.5)
@@ -58,20 +63,26 @@ class Timer (threading.Thread):
             while self.seconds >= 0.0 and not self.stop.is_set():
                 # ----------- STARTING PHASE ------------------
                 if self.seconds == 242.5 or self.seconds == 242.0 or self.seconds == 240.0:
-                    pygame.mixer.music.load("./timer/tracks/whistle.ogg")
+                    pygame.mixer.music.load(self.sfx_whistle)
                     pygame.mixer.music.play()  # BEEP 1/2/3
                 # ------------ COMMENCE SHOOTING ---------------
                 if self.seconds == 120.0:
-                    pygame.mixer.music.load("./timer/tracks/twominutesremaining.ogg")
+                    pygame.mixer.music.load(self.sfx_twominutes)
                     pygame.mixer.music.play()  # 2 MINUTE REMAINING
 
                 if self.seconds == 60.0:
-                    pygame.mixer.music.load("./timer/tracks/oneminuteremaining.ogg")
+                    pygame.mixer.music.load(self.sfx_oneminute)
                     pygame.mixer.music.play()  # 1 MINUTE REMAINING
 
                 if self.seconds == 0.0:
-                    pygame.mixer.music.load("./timer/tracks/whistle.ogg")
+                    pygame.mixer.music.load(self.sfx_whistle)
                     pygame.mixer.music.play()  # 0 MINUTE REMAINING
                 # --------------- END SHOOTING ---------------
                 time.sleep(0.5)
                 self.seconds -= 0.5
+
+
+def resource_path(relative):
+    if hasattr(sys, "_MEIPASS"):
+        return os.path.join(sys._MEIPASS, relative)
+    return os.path.join(relative)

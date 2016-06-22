@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_AutoTimer(object):
     def setupUi(self, AutoTimer):
         AutoTimer.setObjectName("AutoTimer")
-        AutoTimer.resize(319, 296)
+        AutoTimer.resize(320, 300)
         icon = QtGui.QIcon()
         icon_loc = resource_path(os.path.join('data', 'watch.ico'))
         icon.addPixmap(QtGui.QPixmap(icon_loc), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -67,4 +67,3 @@ if __name__ == "__main__":
     ui.setupUi(AutoTimer)
     AutoTimer.show()
     sys.exit(app.exec_())
-

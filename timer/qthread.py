@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore
 
 
 class LCDNumber(QtCore.QThread):
@@ -9,5 +9,5 @@ class LCDNumber(QtCore.QThread):
         self.stop = stop
 
     def run(self):
-        while not self.stop.is_set():
+        while not self.stop.isAccepted():
             self.lcdnumber.setProperty("intValue", self.thread.seconds)

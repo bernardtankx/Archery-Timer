@@ -13,7 +13,7 @@ class Ui_AutoTimer(object):
         AutoTimer.setObjectName("AutoTimer")
         AutoTimer.resize(319, 296)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("timer/watch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("watch.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         AutoTimer.setWindowIcon(icon)
         self.fourMinuteBtn = QtWidgets.QRadioButton(AutoTimer)
         self.fourMinuteBtn.setGeometry(QtCore.QRect(210, 270, 93, 17))
@@ -59,4 +59,3 @@ if __name__ == "__main__":
     ui.setupUi(AutoTimer)
     AutoTimer.show()
     sys.exit(app.exec_())
-

@@ -1,7 +1,7 @@
 import sys
-import qthread
 import time
-import timer
+import thread_pyqt_lcdnumber
+import thread_timer
 from PyQt5 import QtCore, QtWidgets
 from gui import Ui_AutoTimer
 
@@ -17,10 +17,10 @@ class AutoTimer(Ui_AutoTimer):
 
         self.t_stop = QtCore.QEvent(0)
 
-        self.t4 = timer.Timer(4, self.t_stop)
-        self.t3 = timer.Timer(3, self.t_stop)
-        self.t2 = timer.Timer(2, self.t_stop)
-        self.t1 = qthread.LCDNumber(self.lcdNumber, self.t4, self.t_stop)
+        self.t4 = thread_timer.Timer(4, self.t_stop)
+        self.t3 = thread_timer.Timer(3, self.t_stop)
+        self.t2 = thread_timer.Timer(2, self.t_stop)
+        self.t1 = thread_pyqt_lcdnumber.LCDNumber(self.lcdNumber, self.t4, self.t_stop)
 
         # Connect button with a custom function
         self.fourMinuteBtn.clicked.connect(self.selectFourMin)
@@ -49,19 +49,19 @@ class AutoTimer(Ui_AutoTimer):
         time.sleep(0.5)
         self.t_stop.ignore()
         if self._fourMin and not self.t4.isRunning() and not self.t3.isRunning() and not self.t2.isRunning():
-            self.t4 = timer.Timer(4, self.t_stop)
+            self.t4 = thread_timer.Timer(4, self.t_stop)
             self.t4.start()
-            self.t1 = qthread.LCDNumber(self.lcdNumber, self.t4, self.t_stop)
+            self.t1 = thread_pyqt_lcdnumber.LCDNumber(self.lcdNumber, self.t4, self.t_stop)
             self.t1.start()
         elif self._threeMin and not self.t4.isRunning() and not self.t3.isRunning() and not self.t2.isRunning():
-            self.t3 = timer.Timer(3, self.t_stop)
+            self.t3 = thread_timer.Timer(3, self.t_stop)
             self.t3.start()
-            self.t1 = qthread.LCDNumber(self.lcdNumber, self.t3, self.t_stop)
+            self.t1 = thread_pyqt_lcdnumber.LCDNumber(self.lcdNumber, self.t3, self.t_stop)
             self.t1.start()
         elif self._twoMin and not self.t4.isRunning() and not self.t3.isRunning() and not self.t2.isRunning():
-            self.t2 = timer.Timer(2, self.t_stop)
+            self.t2 = thread_timer.Timer(2, self.t_stop)
             self.t2.start()
-            self.t1 = qthread.LCDNumber(self.lcdNumber, self.t2, self.t_stop)
+            self.t1 = thread_pyqt_lcdnumber.LCDNumber(self.lcdNumber, self.t2, self.t_stop)
             self.t1.start()
 
     def stop(self):

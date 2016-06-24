@@ -39,7 +39,7 @@ How it Works:
 
 >       * 2 whistles will be blown when the Start button is clicked
 
->       * 1 whistle will be blown when it start officially at the 4, 3 or 2 minutes
+>       * 1 whistle will be blown when it start officially at the 4, 3 or 2 minutes mark
 
 >       * "Two minute remaining" will be played when there is two minutes left
 

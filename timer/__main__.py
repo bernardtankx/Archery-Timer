@@ -12,10 +12,6 @@ class AutoTimer(Ui_AutoTimer):
         Ui_AutoTimer.__init__(self)
         self.setupUi(dialog)
 
-        self._fourMin = False
-        self._threeMin = False
-        self._twoMin = False
-
         self.t_stop = threading.Event()
 
         self.t4 = thread_timer.Timer(4, self.t_stop)
@@ -23,43 +19,41 @@ class AutoTimer(Ui_AutoTimer):
         self.t2 = thread_timer.Timer(2, self.t_stop)
         self.t1 = thread_pyqt_lcdnumber.LCDNumber(self.lcdNumber, self.t4, self.t_stop)
 
+        self.fourMinuteBtn.setChecked(True)
+
+        self.numEnds = 0
+        self.spinBox_numEnds.setMinimum(0)
+        self.spinBox_numEnds.setSingleStep(1)
+
         # Connect button with a custom function
-        self.fourMinuteBtn.clicked.connect(self.selectFourMin)
-        self.threeMinuteBtn.clicked.connect(self.selectThreeMin)
-        self.twoMinuteBtn.clicked.connect(self.selectTwoMin)
         self.startBtn.clicked.connect(self.start)
         self.stopBtn.clicked.connect(self.stop)
-
-    def selectFourMin(self):
-        self._fourMin = True
-        self._threeMin = False
-        self._twoMin = False
-
-    def selectThreeMin(self):
-        self._fourMin = False
-        self._threeMin = True
-        self._twoMin = False
-
-    def selectTwoMin(self):
-        self._fourMin = False
-        self._threeMin = False
-        self._twoMin = True
+        self.spinBox_numEnds.valueChanged.connect(self.getNumEnds)
 
     def start(self):
+        self.numEnds += 1
+        self.spinBox_numEnds.setValue(self.numEnds)
+
         self.t_stop.set()
-        time.sleep(0.5)
+        if self.t4.is_alive():
+            self.t4.join()
+        if self.t3.is_alive():
+            self.t3.join()
+        if self.t2.is_alive():
+            self.t2.join()
         self.t_stop.clear()
-        if self._fourMin and not self.t4.is_alive() and not self.t3.is_alive() and not self.t2.is_alive():
+
+        if self.fourMinuteBtn.isChecked() and not self.t4.is_alive() and not self.t3.is_alive() and not self.t2.is_alive():
             self.t4 = thread_timer.Timer(4, self.t_stop)
             self.t4.start()
             self.t1 = thread_pyqt_lcdnumber.LCDNumber(self.lcdNumber, self.t4, self.t_stop)
             self.t1.start()
-        elif self._threeMin and not self.t4.is_alive() and not self.t3.is_alive() and not self.t2.is_alive():
+        elif self.threeMinuteBtn.isChecked() and not self.t4.is_alive() and not self.t3.is_alive() and not self.t2.is_alive():
             self.t3 = thread_timer.Timer(3, self.t_stop)
             self.t3.start()
             self.t1 = thread_pyqt_lcdnumber.LCDNumber(self.lcdNumber, self.t3, self.t_stop)
             self.t1.start()
-        elif self._twoMin and not self.t4.is_alive() and not self.t3.is_alive() and not self.t2.is_alive():
+        elif self.twoMinuteBtn.isChecked() and not self.t4.is_alive() and not self.t3.is_alive() and not self.t2.is_alive():
             self.t2 = thread_timer.Timer(2, self.t_stop)
             self.t2.start()
             self.t1 = thread_pyqt_lcdnumber.LCDNumber(self.lcdNumber, self.t2, self.t_stop)
@@ -67,6 +61,9 @@ class AutoTimer(Ui_AutoTimer):
 
     def stop(self):
         self.t_stop.set()
+
+    def getNumEnds(self):
+        self.numEnds = self.spinBox_numEnds.value()
 
 
 if __name__ == '__main__':

@@ -4,6 +4,7 @@ import sys
 import thread_pyqt_lcdnumber
 import thread_timer
 import threading
+import atexit
 from datetime import datetime
 from PyQt5 import QtWidgets
 from gui import Ui_AutoTimer
@@ -27,14 +28,20 @@ class AutoTimer(Ui_AutoTimer):
         self.spinBox_numEnds.setMinimum(0)
         self.spinBox_numEnds.setSingleStep(1)
 
+        self.numArrows = 6
+        self.spinBox_numArrows.setMinimum(0)
+        self.spinBox_numEnds.setSingleStep(1)
+
         # Connect button with a custom function
         self.startBtn.clicked.connect(self.start)
         self.stopBtn.clicked.connect(self.stop)
         self.spinBox_numEnds.valueChanged.connect(self.getNumEnds)
+        self.spinBox_numArrows.valueChanged.connect(self.getNumArrows)
 
     def start(self):
         self.numEnds += 1
         self.spinBox_numEnds.setValue(self.numEnds)
+        self.spinBox_numArrows.setValue(self.numArrows)
 
         self.t_stop.set()
         if self.t4.is_alive():
@@ -67,9 +74,12 @@ class AutoTimer(Ui_AutoTimer):
     def getNumEnds(self):
         self.numEnds = self.spinBox_numEnds.value()
 
+    def getNumArrows(self):
+        self.numArrows = self.spinBox_numArrows.value()
+
     def writeText(self):
         with open("Training Log.txt", "a") as text_file:
-            print("Date: " + "{:%B %d, %Y}".format(datetime.now()) + "    Number of Ends: " + str(self.numEnds) + "    Number of Arrows per End: ", file=text_file)
+            print("Date: " + "{:%B %d, %Y}".format(datetime.now()) + "    Number of Ends: " + str(self.numEnds) + "    Number of Arrows per End: " + str(self.numArrows), file=text_file)
 
 
 
@@ -80,5 +90,6 @@ if __name__ == '__main__':
     prog = AutoTimer(dialog)
 
     dialog.show()
-
+    
+    atexit.register(prog.writeText)
     sys.exit(app.exec_())

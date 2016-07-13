@@ -1,1 +1,2 @@
-python ./timer/__main__.py
+cd /d D:\Git\Timer\timer
+python main.py
